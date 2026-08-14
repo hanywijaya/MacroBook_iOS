@@ -45,21 +45,21 @@ struct DayDetailView: View {
                         
                         Spacer()
                         
-                        Button {
-                            // Edit action
-                        } label: {
-                            ZStack {
-                                Circle()
-                                    .fill(.darkBrown.opacity(0.1))
-                                    .frame(width: 40, height: 40)
-                                Image(systemName: "ellipsis")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 16)
-                                    .bold()
-                                    .foregroundColor(.darkBrown)
-                            }
-                        }
+//                        Button {
+//                            // Edit action
+//                        } label: {
+//                            ZStack {
+//                                Circle()
+//                                    .fill(.darkBrown.opacity(0.1))
+//                                    .frame(width: 40, height: 40)
+//                                Image(systemName: "ellipsis")
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(width: 16)
+//                                    .bold()
+//                                    .foregroundColor(.darkBrown)
+//                            }
+//                        }
                     }
                     .padding(.horizontal)
                 }
