@@ -37,5 +37,5 @@ MacroBook is an iOS calorie and macronutrient tracking app designed to make dail
 - **Language:** Swift
 - **UI:** SwiftUI
 - **Architecture:** MVVM
-- **Database:** CoreData
+- **Database:** Core Data
 - **IDE:** Xcode
