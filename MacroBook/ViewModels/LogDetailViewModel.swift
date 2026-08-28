@@ -30,10 +30,10 @@ final class LogDetailViewModel: ObservableObject {
                 intake.title = log.title
                 intake.note = log.note
                 intake.serving = log.serving ?? 1
-                intake.calories = log.calories * intake.serving
-                intake.carbs = (log.carbs ?? 0) * intake.serving
-                intake.protein = (log.protein ?? 0) * intake.serving
-                intake.fat = (log.fat ?? 0) * intake.serving
+                intake.calories = log.calories
+                intake.carbs = log.carbs ?? 0
+                intake.protein = log.protein ?? 0
+                intake.fat = log.fat ?? 0
                 
             case .activityBurn:
                 guard let activityBurn = try context.existingObject(with: id) as? ActivityBurn else {return}
@@ -48,6 +48,23 @@ final class LogDetailViewModel: ObservableObject {
             
         } catch {
             print("Failed to edit log: \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteLog(_ log: Log) {
+        guard let objectID = log.id else {
+            print("No object ID found")
+            return
+        }
+
+        do {
+            let object = try context.existingObject(with: objectID)
+
+            context.delete(object)
+            try context.save()
+
+        } catch {
+            print("Failed to delete log: \(error)")
         }
     }
 }

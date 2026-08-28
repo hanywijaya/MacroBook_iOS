@@ -62,7 +62,12 @@ struct EditIntakeView: View {
             IntakeFormView(title: $title, date: $date, serving: $serving, note: $note, calories: $calories, carbs: $carbs, protein: $protein, fat: $fat)
             
             Button {
-                let newLog = Log(id: log.id, type: .intake, timestamp: date, title: title, note: note, calories: Double(calories) ?? 0, protein: Double(protein) ?? 0, carbs: Double(carbs) ?? 0, fat: Double(fat) ?? 0, serving: Double(serving) ?? 1)
+                let corrected_serving = serving.replacingOccurrences(of: ",", with: ".")
+                let newCalories = (Double(calories) ?? 0) * (Double(corrected_serving) ?? 1)
+                let newCarbs = (Double(carbs) ?? 0) * (Double(corrected_serving) ?? 1)
+                let newProtein = (Double(protein) ?? 0) * (Double(corrected_serving) ?? 1)
+                let newFat = (Double(fat) ?? 0) * (Double(corrected_serving) ?? 1)
+                let newLog = Log(id: log.id, type: .intake, timestamp: date, title: title, note: note, calories: newCalories, protein: newProtein, carbs: newCarbs, fat: newFat, serving: Double(corrected_serving) ?? 1)
                 log = newLog
                 logDetailVM.editLog(log: newLog)
                 homeVM.refreshDashboard()

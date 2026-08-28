@@ -14,6 +14,9 @@ struct LogDetailView: View {
     @State var log: Log
     
     @State private var showEditIntake: Bool = false
+    @State private var showDeleteConfirmation = false
+    
+    @ObservedObject var logDetailVM: LogDetailViewModel
     
     var body: some View {
         AppContainer(color: .cardBackground) {
@@ -39,6 +42,23 @@ struct LogDetailView: View {
                         }
                         
                         Spacer()
+                        
+                        Button {
+                            showDeleteConfirmation = true
+                        } label: {
+                            ZStack {
+                                Circle()
+                                    .fill(.darkBrown.opacity(0.1))
+                                    .frame(width: 40, height: 40)
+
+                                Image(systemName: "trash")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 16)
+                                    .bold()
+                                    .foregroundColor(.darkBrown)
+                            }
+                        }
                         
 //                        Button {
 //                            // Edit action
@@ -115,22 +135,34 @@ struct LogDetailView: View {
         .navigationBarBackButtonHidden(true)
         .fullScreenCover(isPresented: $showEditIntake) {
             if log.type == .intake {
-                EditIntakeView(log: $log, title: log.title, date: log.timestamp, serving: (log.serving ?? 0).display, note: log.note ?? "", calories: log.calories.display, carbs: (log.carbs ?? 0).display, protein: (log.protein ?? 0).display, fat: (log.fat ?? 0).display, logDetailVM: LogDetailViewModel(context: viewContext), homeVM: HomeViewModel(context: viewContext))
+                EditIntakeView(log: $log, title: log.title, date: log.timestamp, serving: (log.serving ?? 1).displayWithDecimal, note: log.note ?? "", calories: (log.calories / (log.serving ?? 1)).display, carbs: ((log.carbs ?? 0) / (log.serving ?? 1)).display, protein: ((log.protein ?? 0) / (log.serving ?? 1)).display, fat: ((log.fat ?? 0) / (log.serving ?? 1)).display, logDetailVM: logDetailVM, homeVM: HomeViewModel(context: viewContext))
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
             } else if log.type == .activityBurn {
-                EditActivityBurnView(log: $log, title: log.title, date: log.timestamp, note: log.note ?? "", calories: log.calories.display, logDetailVM: LogDetailViewModel(context: viewContext), homeVM: HomeViewModel(context: viewContext))
+                EditActivityBurnView(log: $log, title: log.title, date: log.timestamp, note: log.note ?? "", calories: log.calories.display, logDetailVM: logDetailVM, homeVM: HomeViewModel(context: viewContext))
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
             }
         }
         .toolbar(.hidden, for: .tabBar)
+        .confirmationDialog(
+            "Delete this log?",
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) {
+                logDetailVM.deleteLog(log)
+                dismiss()
+            }
+
+            Button("Cancel", role: .cancel) {}
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        LogDetailView(log: Log(id: nil, type: .intake, timestamp: Calendar.current.date(from: DateComponents(year: 2026, month: 6, day: 27, hour: 8, minute: 30))!, title: "Milk", note: "200ml", calories: 60, protein: 6, carbs: 9, fat: 0, serving: 1))
+        LogDetailView(log: Log(id: nil, type: .intake, timestamp: Calendar.current.date(from: DateComponents(year: 2026, month: 6, day: 27, hour: 8, minute: 30))!, title: "Milk", note: "200ml", calories: 60, protein: 6, carbs: 9, fat: 0, serving: 1), logDetailVM: LogDetailViewModel(context: PersistenceController.shared.container.viewContext))
 //        LogDetailView(log: Log(id: nil, type: .activityBurn, timestamp: Calendar.current.date(from: DateComponents(year: 2026, month: 6, day: 27, hour: 8, minute: 30))!, title: "15k steps", note: "", calories: 300, protein: 0, carbs: 0, fat: 0, serving: 0))
     }
 }

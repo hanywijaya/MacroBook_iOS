@@ -33,7 +33,7 @@ struct IntakeDetailView: View {
                     
                     Spacer()
                     
-                    Text("\((log.serving ?? 1).display)")
+                    Text("\((log.serving ?? 1).displayWithDecimal)")
                         .font(.custom("Poppins-Regular", size: 12))
                         .foregroundColor(.darkGray)
                 }
@@ -69,11 +69,11 @@ struct IntakeDetailView: View {
                     .foregroundColor(.darkBrown)
                     .padding(.bottom)
                 
-                MacroRowView(title: "Carbs", value: (log.carbs ?? 0) * (log.serving ?? 1))
+                MacroRowView(title: "Carbs", value: (log.carbs ?? 0))
                 Divider()
-                MacroRowView(title: "Protein", value: (log.protein ?? 0) * (log.serving ?? 1))
+                MacroRowView(title: "Protein", value: (log.protein ?? 0))
                 Divider()
-                MacroRowView(title: "Fat", value: (log.fat ?? 0) * (log.serving ?? 1))
+                MacroRowView(title: "Fat", value: (log.fat ?? 0))
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -87,6 +87,6 @@ struct IntakeDetailView: View {
 
 
 #Preview {
-    IntakeDetailView(log: Log(id: nil, type: .intake, timestamp: Calendar.current.date(from: DateComponents(year: 2026, month: 6, day: 27, hour: 8, minute: 30))!, title: "Milk", note: "200ml", calories: 60, protein: 6, carbs: 9, fat: 0, serving: 1))
+    IntakeDetailView(log: Log(id: nil, type: .intake, timestamp: Calendar.current.date(from: DateComponents(year: 2026, month: 6, day: 27, hour: 8, minute: 30))!, title: "Milk", note: "200ml", calories: 60, protein: 6, carbs: 9, fat: 0, serving: 0.5))
         .background(.cardBackground)
 }

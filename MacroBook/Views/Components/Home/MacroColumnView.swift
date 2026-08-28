@@ -20,10 +20,10 @@ struct MacroColumnView: View {
                 .foregroundColor(.darkGray)
 
             if title == "Serving" {
-                Text("\(value.formatted())")
+                Text("\(value.displayWithDecimal)")
                     .font(.custom("Poppins-SemiBold", size: 12))
             } else {
-                Text("\(value.formatted())g")
+                Text("\(value.display)g")
                     .font(.custom("Poppins-SemiBold", size: 12))
             }
         }
