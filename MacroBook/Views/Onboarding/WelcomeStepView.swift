@@ -14,6 +14,7 @@ struct WelcomeStepView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 64)
+                .padding(.horizontal, 48)
             Text("Start personalizing your own weight loss journey!")
                 .font(.custom("Poppins-Regular", size: 14))
                 .multilineTextAlignment(.center)

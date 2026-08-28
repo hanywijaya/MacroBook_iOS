@@ -74,7 +74,8 @@ struct AddIntakeView: View {
             IntakeFormView(title: $title, date: $date, serving: $serving, note: $note, calories: $calories, carbs: $carbs, protein: $protein, fat: $fat)
             
             Button {
-                addIntakeVM.addIntake(title: title, date: date, serving: serving, note: note, calories: calories, carbs: carbs, protein: protein, fat: fat)
+                let corrected_serving = serving.replacingOccurrences(of: ",", with: ".")
+                addIntakeVM.addIntake(title: title, date: date, serving: corrected_serving, note: note, calories: calories, carbs: carbs, protein: protein, fat: fat)
                 homeVM.refreshDashboard()
                 dismiss()
             } label: {

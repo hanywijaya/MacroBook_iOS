@@ -112,7 +112,7 @@ struct DayDetailView: View {
                                 } else {
                                     ForEach(dayDetailVM.logs) { log in
                                         NavigationLink {
-                                            LogDetailView(log: log)
+                                            LogDetailView(log: log, logDetailVM: LogDetailViewModel(context: viewContext))
                                         } label: {
                                             LogCardView(
                                                 timestamp: log.timestamp,

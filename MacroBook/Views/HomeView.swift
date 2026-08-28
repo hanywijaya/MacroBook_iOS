@@ -113,7 +113,7 @@ struct HomeView: View {
                                     } else {
                                         ForEach(homeVM.todayLogs) { log in
                                             NavigationLink {
-                                                LogDetailView(log: log)
+                                                LogDetailView(log: log, logDetailVM: LogDetailViewModel(context: viewContext))
                                             } label: {
                                                 LogCardView(
                                                     timestamp: log.timestamp,
@@ -126,7 +126,14 @@ struct HomeView: View {
                                                     serving: log.serving ?? 1
                                                 )
                                                 .foregroundColor(.black)
-//                                                if log.type == .intake {
+                                            }
+                                        }
+                                        
+//                                        List {
+//                                            ForEach(homeVM.todayLogs) { log in
+//                                                NavigationLink {
+//                                                    LogDetailView(log: log)
+//                                                } label: {
 //                                                    LogCardView(
 //                                                        timestamp: log.timestamp,
 //                                                        title: log.title,
@@ -137,18 +144,29 @@ struct HomeView: View {
 //                                                        fat: log.fat ?? 0,
 //                                                        serving: log.serving ?? 1
 //                                                    )
-//                                                    .foregroundColor(.black)
-//                                                } else {
-//                                                    LogCardView(
-//                                                        timestamp: log.timestamp,
-//                                                        title: log.title,
-//                                                        calories: log.calories,
-//                                                        type: log.type
-//                                                    )
-//                                                    .foregroundColor(.black)
+//                                                    .foregroundStyle(.black)
 //                                                }
-                                            }
-                                        }
+//                                                .listRowInsets(
+//                                                    EdgeInsets(
+//                                                        top: 6,
+//                                                        leading: 0,
+//                                                        bottom: 6,
+//                                                        trailing: 0
+//                                                    )
+//                                                )
+//                                                .listRowBackground(Color.clear)
+//                                                .listRowSeparator(.hidden)
+//                                            }
+//                                            .onDelete { indexSet in
+//                                                for index in indexSet {
+//                                                    let log = homeVM.todayLogs[index]
+//                                                    homeVM.deleteLog(log)
+//                                                }
+//                                            }
+//                                        }
+//                                        .listStyle(.plain)
+//                                        .scrollContentBackground(.hidden)
+//                                        .background(.backgroundGray)
                                     }
                                 }
                             }

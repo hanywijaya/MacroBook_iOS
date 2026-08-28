@@ -21,11 +21,24 @@ struct IntakeFormView: View {
     @FocusState private var titleFieldFocused: Bool
     
     var body: some View {
-        TextField("Title", text: $title)
-            .font(.custom("Poppins-SemiBold", size: 32))
+//        TextField("Title", text: $title)
+//            .font(.custom("Poppins-SemiBold", size: 32))
+//            .multilineTextAlignment(.center)
+//            .focused($titleFieldFocused)
+//            .padding(.top, 32)
+//            .onAppear {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                    titleFieldFocused = true
+//                }
+//            }
+        
+        TextField("Title", text: $title, axis: .vertical)
+            .font(.custom("Poppins-SemiBold", size: 28))
             .multilineTextAlignment(.center)
+            .lineLimit(1...3)
             .focused($titleFieldFocused)
-            .padding(.top, 32)
+            .padding(.horizontal, 24)
+            .padding(.top, 28)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     titleFieldFocused = true
@@ -48,7 +61,7 @@ struct IntakeFormView: View {
                     TextField("1", text: $serving)
                         .font(.custom("Poppins-Regular", size: 14))
                         .multilineTextAlignment(.trailing)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                 }
                 
                 HStack {
