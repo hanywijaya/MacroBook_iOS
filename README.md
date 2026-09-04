@@ -1,6 +1,6 @@
 # MacroBook iOS
 
-MacroBook is an iOS calorie and macronutrient tracking app designed to make daily food and activity logging simple, organized, and fully customizable.
+MacroBook is an iOS calorie and macronutrient tracking app designed to make daily food and activity logging simple, organized, and fully customizable. Available for download [here](https://apps.apple.com/id/app/macrobook/id6806149973).
 
 ## Features
 
